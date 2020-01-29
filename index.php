@@ -23,9 +23,18 @@
         $quizResults->InitFromRequest($requestParameters);
         $generator = QuizReportFactory::CreateGenerator($quizResults, $requestParameters);
         $report = $generator->createReport();
-
+      $lastname = $_POST['USER_LAST_NAME'];
+      $firstname = $_POST['USER_FIRST_NAME'];
+      $studentid = $_POST['STUDENTID'];
+      $teachername = $_POST['TEACHER_NAME'];
+      $period = $_POST['PERIOD'];
+      $psp =$_POST['psp'];
+        $sp= $_POST['sp'];
+       $tp= $_POST['tp'];
         $dateTime = date('Y-m-d_H-i-s');
-        $resultFilename = dirname(__FILE__) . "/result/quiz_result_{$dateTime}.txt";
+        $detailed_results_xml = $_POST['dr'];
+     //write complete results to txt file
+        $resultFilename = dirname(__FILE__) . "/result/quiz_result_{$teachername}_{$period}_{$lastname}_{$firstname}_{$dateTime}.txt";
         @file_put_contents($resultFilename, $report);
 
         echo "OK";
@@ -45,3 +54,5 @@
         $logMessage .= ',' . PHP_EOL;
         @file_put_contents($logFilename, $logMessage, FILE_APPEND);
     }
+$conn->close();
+?> 
